@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>MPassID Login</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    </head>
+    <body>
+        <div class="container d-flex justify-content-center align-items-center vh-100">
+            <a href="https://mpass-proxy-test.csc.fi/idp/profile/oidc/authorize?client_id=spa&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Foauth2%2Fmpassid%2Flogin%2Fredirect&scope=openid">
+                <div class="btn btn-outline-primary shadow rounded-pill">
+                    {% include 'mpassidlogin/logo/MPASSID_logo_FI.svg' %}
+                </div>
+            </a>
+        </div>
+    </body>
+</html>
