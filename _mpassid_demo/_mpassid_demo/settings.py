@@ -37,11 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'mpassidLogin.apps.MpassidLoginConfig',
-    'mpassidUserpage.apps.MpassidUserpageConfig',
+    'mpassidLogin.apps.MpassidloginConfig',
+    'mpassidUserpage.apps.MpassiduserpageConfig',
     ]
-    
-]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

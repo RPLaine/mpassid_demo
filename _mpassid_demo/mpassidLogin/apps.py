@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class MpassidLoginConfig(AppConfig):
+class MpassidloginConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'mpassidlogin'
+    name = 'mpassidLogin'
