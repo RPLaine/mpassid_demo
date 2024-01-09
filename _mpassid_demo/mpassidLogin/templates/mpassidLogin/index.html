@@ -6,7 +6,7 @@
     </head>
     <body>
         <div class="container d-flex justify-content-center align-items-center vh-100">
-            <form method="POST" action="{% url 'mpassidLogin:redirect' %}">
+            <form method="POST" action="{% url 'mpassidLogin:index' %}">
                 {% csrf_token %}
                 <button type="submit" class="btn btn-outline-primary shadow rounded-pill" name="mpassid_button">
                     {% include 'mpassidlogin/logo/MPASSID_logo_FI.svg' %}
