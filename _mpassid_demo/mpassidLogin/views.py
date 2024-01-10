@@ -39,8 +39,6 @@ def exchange_code(code: str):
     redirect_uri = os.environ.get("REDIRECT_URI")
     token_endpoint = os.environ.get("TOKEN_ENDPOINT")
     userinfo_endpoint = os.environ.get("USERINFO_ENDPOINT")
-
-    print('Environmental variables loaded.')
     
     data = {
         'client_id': client_id,
@@ -49,8 +47,6 @@ def exchange_code(code: str):
         'code': code,
         'redirect_uri': redirect_uri,
     }
-
-    print('Data', data, sep=': ')
 
     headers = {
         'Content-Type': 'application/x-www-form-urlencoded'
