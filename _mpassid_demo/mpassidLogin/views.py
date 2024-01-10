@@ -30,7 +30,6 @@ def redirect(request):
 
     return JsonResponse({
         'user': user,
-        'code': code
         })
 
 def exchange_code(code: str):
@@ -46,6 +45,7 @@ def exchange_code(code: str):
         'grant_type': 'authorization_code',
         'code': code,
         'redirect_uri': redirect_uri,
+        'scope': 'openid profile',
     }
 
     headers = {
@@ -57,7 +57,7 @@ def exchange_code(code: str):
 
     #error checking access_token
     if 'access_token' not in credentials:
-        return JsonResponse({'error': 'No access token provided.', 'credentials': credentials})
+        return {'error': 'No access token provided.', 'credentials': credentials}
     
     access_token = credentials['access_token']
     
