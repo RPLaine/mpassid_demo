@@ -27,7 +27,6 @@ def redirect(request):
     if request.GET.get('code'):
         print('Code received.')
         code = request.GET.get('code')
-        print('Code: ', code, sep=': ')
     else:
         return JsonResponse({'error': 'No code provided.'})
 
@@ -45,40 +44,14 @@ def exchange_code(code: str):
     token_endpoint = os.environ.get("TOKEN_ENDPOINT")
     userinfo_endpoint = os.environ.get("USERINFO_ENDPOINT")
 
-    print('Environment variables loaded.')
+    print('Environmental variables loaded.')
     
     data = {
         'client_id': client_id,
         'client_secret': client_secret,
         'grant_type': 'authorization_code',
         'code': code,
-        #'redirect_uri': redirect_uri,
-        'scope': 'openid profile',
-        'response_type': 'code',
-        'subject_type': 'public',
-        'response_mode': 'query',
-        'token_endpoint_auth_method': 'client_secret_post',
-        'claims': {
-            "aud",
-            "iss",
-            "sub",
-            "iat",
-            "exp",
-            "acr",
-            "auth_time",
-            "family_name",
-            "given_name",
-            "nickname",
-            "urn:mpass.id:learningMaterialsCharge",
-            "urn:mpass.id:uid",
-            "urn:mpass.id:role",
-            "urn:mpass.id:role_v1.1",
-            "urn:mpass.id:classLevel",
-            "urn:mpass.id:schoolInfo",
-            "urn:oid:1.3.6.1.4.1.16161.1.1.27",
-            "urn:mpass.id:educationProviderInfo",
-            "urn:mpass.id:originalIssuer"
-        }
+        'redirect_uri': redirect_uri,
     }
 
     print('Data', data, sep=': ')
