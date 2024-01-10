@@ -52,8 +52,33 @@ def exchange_code(code: str):
         'client_secret': client_secret,
         'grant_type': 'authorization_code',
         'code': code,
-        'redirect_uri': redirect_uri,
-        'scope': 'profile'
+        #'redirect_uri': redirect_uri,
+        'scope': 'openid profile',
+        'response_type': 'code',
+        'subject_type': 'public',
+        'response_mode': 'query',
+        'token_endpoint_auth_method': 'client_secret_post',
+        'claims': {
+            "aud",
+            "iss",
+            "sub",
+            "iat",
+            "exp",
+            "acr",
+            "auth_time",
+            "family_name",
+            "given_name",
+            "nickname",
+            "urn:mpass.id:learningMaterialsCharge",
+            "urn:mpass.id:uid",
+            "urn:mpass.id:role",
+            "urn:mpass.id:role_v1.1",
+            "urn:mpass.id:classLevel",
+            "urn:mpass.id:schoolInfo",
+            "urn:oid:1.3.6.1.4.1.16161.1.1.27",
+            "urn:mpass.id:educationProviderInfo",
+            "urn:mpass.id:originalIssuer"
+        }
     }
 
     print('Data', data, sep=': ')
