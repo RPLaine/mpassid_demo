@@ -15,17 +15,13 @@ environ.Env.read_env(env_file=str(BASE_DIR / 'mpassidLogin.env'))
 
 def index(request):
     if request.method == 'POST' and 'mpassid_button' in request.POST:
-        print ('Mpassid button pressed.')
         redirect_url = os.environ.get("REDIRECT_URL")
-        print ('Redirection to ' + redirect_url)
         return HttpResponseRedirect(redirect_url)
     
     return render(request, 'mpassidLogin/index.html')
 
 def redirect(request):
-    print('Getting code...')
     if request.GET.get('code'):
-        print('Code received.')
         code = request.GET.get('code')
     else:
         return JsonResponse({'error': 'No code provided.'})
@@ -62,18 +58,14 @@ def exchange_code(code: str):
 
     response = requests.post(token_endpoint, data=data, headers=headers)
     credentials = response.json()
-    print('Credentials:')
-    print(credentials)
+
+    #error checking access_token
+    if 'access_token' not in credentials:
+        return JsonResponse({'error': 'No access token provided.', 'credentials': credentials})
+    
     access_token = credentials['access_token']
-    print('Access token:')
-    print(access_token)
     
     response = requests.get(userinfo_endpoint, headers={'Authorization': f'Token {access_token}'})
     user = response.json()
-    print('User:')
-    print(user)
-    return user
 
-def test(request):
-    env_vars = dict(os.environ)
-    return JsonResponse(env_vars)
+    return user
