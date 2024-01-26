@@ -7,8 +7,8 @@ import requests
 from requests_oauthlib import OAuth2Session
 
 
-BASE_DIR = Path(__file__).resolve().parent.parent
-environ.Env.read_env(env_file=str(BASE_DIR / 'mpassidLogin.env'))
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
+environ.Env.read_env(env_file=str(BASE_DIR / '.env'))
 
 def index(request):
     if request.method == 'POST' and 'mpassid_button' in request.POST:
