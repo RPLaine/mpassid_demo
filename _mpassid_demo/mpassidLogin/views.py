@@ -4,14 +4,11 @@ from pathlib import Path
 import environ
 import os
 import requests
+from requests_oauthlib import OAuth2Session
 
-# Initialization of environment variables
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 environ.Env.read_env(env_file=str(BASE_DIR / 'mpassidLogin.env'))
-
-
-# Views
 
 def index(request):
     if request.method == 'POST' and 'mpassid_button' in request.POST:
@@ -35,33 +32,14 @@ def redirect(request):
 def exchange_code(code: str):
     client_id = os.environ.get("CLIENT_ID")
     client_secret = os.environ.get("CLIENT_SECRET")
-    redirect_uri = os.environ.get("REDIRECT_URI")
     token_endpoint = os.environ.get("TOKEN_ENDPOINT")
     userinfo_endpoint = os.environ.get("USERINFO_ENDPOINT")
-    
-    data = {
-        'client_id': client_id,
-        'client_secret': client_secret,
-        'grant_type': 'authorization_code',
-        'code': code,
-        'redirect_uri': redirect_uri,
-        'scope': 'openid profile',
-    }
 
-    headers = {
-        'Content-Type': 'application/x-www-form-urlencoded'
-    }
+    response = OAuth2Session.fetch_token(self=OAuth2Session(client_id=client_id), token_url=token_endpoint, code=code, client_secret=client_secret)
 
-    response = requests.post(token_endpoint, data=data, headers=headers)
-    credentials = response.json()
-
-    #error checking access_token
-    if 'access_token' not in credentials:
-        return {'error': 'No access token provided.', 'credentials': credentials}
+    access_token = response['access_token']
     
-    access_token = credentials['access_token']
-    
-    response = requests.get(userinfo_endpoint, headers={'Authorization': f'Token {access_token}'})
+    response = requests.get(userinfo_endpoint, headers={'Authorization': f'Bearer {access_token}'})
     user = response.json()
 
     return user
