@@ -19,5 +19,6 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', include(('mpassidLogin.urls', 'mpassidLogin'), namespace='mpassidLogin')),
     path('oauth2/mpassid/', include(('mpassidLogin.urls', 'mpassidLogin'), namespace='mpassidLogin')),
 ]
