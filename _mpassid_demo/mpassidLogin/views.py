@@ -35,7 +35,20 @@ def exchange_code(code: str):
     token_endpoint = os.environ.get("TOKEN_ENDPOINT")
     userinfo_endpoint = os.environ.get("USERINFO_ENDPOINT")
 
-    response = OAuth2Session.fetch_token(self=OAuth2Session(client_id=client_id), token_url=token_endpoint, code=code, client_secret=client_secret)
+    data = {
+        'grant_type': 'authorization_code',
+        'code': code,
+        'client_id': client_id,
+        'client_secret': client_secret,
+    }
+
+    headers = {
+        'Accept': 'application/json',
+        'Content-Type': 'application/x-www-form-urlencoded',
+    }
+
+    response = requests.post(url=token_endpoint, data=data, headers=headers)
+    #response = OAuth2Session.fetch_token(self=OAuth2Session(client_id=client_id), token_url=token_endpoint, code=code, client_secret=client_secret)
 
     access_token = response['access_token']
     
