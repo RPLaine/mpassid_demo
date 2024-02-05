@@ -4,7 +4,6 @@ from pathlib import Path
 import environ
 import os
 import requests
-from requests_oauthlib import OAuth2Session
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -38,21 +37,18 @@ def exchange_code(code: str):
     data = {
         'grant_type': 'authorization_code',
         'code': code,
-        'client_id': client_id,
-        'client_secret': client_secret,
     }
 
     headers = {
-        'Accept': 'application/json',
         'Content-Type': 'application/x-www-form-urlencoded',
     }
 
-    response = requests.post(url=token_endpoint, data=data, headers=headers)
-    #response = OAuth2Session.fetch_token(self=OAuth2Session(client_id=client_id), token_url=token_endpoint, code=code, client_secret=client_secret)
-
-    access_token = response['access_token']
+    auth = requests.auth.HTTPBasicAuth(client_id, client_secret)
     
-    response = requests.get(userinfo_endpoint, headers={'Authorization': f'Bearer {access_token}'})
+    response = requests.post(token_endpoint, data=data, headers=headers, auth=auth)
+    token = response.json().get('access_token')
+
+    response = requests.get(userinfo_endpoint, headers={'Authorization': f'Bearer {token}'})
     user = response.json()
 
     return user
